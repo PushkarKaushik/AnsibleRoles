@@ -1,0 +1,50 @@
+- name: Stop and disable tomcat
+  service:
+    daemon_reload: yes
+    name: tomcat
+    state: stopped
+    enabled: yes
+  when: ansible_service_mgr == "systemd"
+
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: simpleclient-0.6.0.jar
+    dest: '{{ CATALINA_BASE }}/lib'
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: simpleclient_common-0.6.0.jar
+    dest: '{{ CATALINA_BASE }}/lib'
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: simpleclient_hotspot-0.6.0.jar
+    dest: '{{ CATALINA_BASE }}/lib'
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: simpleclient_servlet-0.6.0.jar
+    dest: '{{ CATALINA_BASE }}/lib'
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: tomcat_exporter_client-0.0.10.jar
+    dest: '{{ CATALINA_BASE }}/lib'
+
+- name: Copy jar file with owner and group permission
+  copy:
+    src: tomcat_exporter_servlet-0.0.10.war
+    dest: '{{ CATALINA_BASE }}/webapps/'
+
+- name: Renaming War file
+  command: mv /{{ CATALINA_BASE }}/webapps/tomcat_exporter_servlet-0.0.10.war /{{ CATALINA_BASE }}/webapps/metrics.war
+
+- name: Start and enable tomcat
+  service:
+    daemon_reload: yes
+    name: tomcat
+    state: started
+    enabled: yes
+  when: ansible_service_mgr == "systemd"
+

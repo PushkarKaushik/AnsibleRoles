@@ -1,0 +1,9 @@
+---
+- name: Tomcat Exporter Setup Role
+  hosts: all
+  roles:
+# uncomment included "tomcat_role" if you want to install TOMCAT  and  TOMCAT EXPORTER  both together
+#    - tomcat_role
+    - tomcat-exporter_role
+  become: yes
+
